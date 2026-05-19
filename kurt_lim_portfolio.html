@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kurt Lim — Computer Science & Software Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4ff;
+    --surface: #ffffff;
+    --surface2: #ece9ff;
+    --border: rgba(200,55,55,0.18);
+    --border-hover: rgba(200,55,55,0.38);
+    --text: #16142b;
+    --muted: #5c5b72;
+    --accent: #c83535;
+    --accent2: #0fa87c;
+    --accent3: #d97706;
+    --accent-glow: rgba(200,53,53,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(245,244,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 1px solid rgba(200,53,53,0.4);
+    border-radius: 6px;
+    color: var(--accent) !important;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent-glow) !important;
+    color: var(--text) !important;
+    border-color: var(--accent) !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 8rem 3rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-photo {
+    flex-shrink: 0;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-photo img {
+    width: 420px;
+    height: 520px;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 20px;
+    border: 3px solid var(--border);
+    box-shadow: 0 20px 50px rgba(200,53,53,0.15);
+    display: block;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,53,53,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(76,201,164,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.3s forwards;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(200,53,53,0.55);
+  }
+
+  .hero-sub {
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+    margin-top: 1.75rem;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.45s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary:hover {
+    background: #a82828;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border-hover);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover {
+    color: var(--text);
+    border-color: rgba(0,0,0,0.3);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.75s forwards;
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 5rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .section-tag::before {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .section-intro {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 520px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .info-card:hover { border-color: var(--border-hover); }
+
+  .info-card-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .info-card-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .info-card-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    font-weight: 300;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.25s;
+  }
+
+  .skill-group:hover {
+    border-color: rgba(200,53,53,0.3);
+    background: var(--surface2);
+  }
+
+  .skill-group-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    font-weight: 400;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    background: rgba(200,53,53,0.1);
+    border-color: rgba(200,53,53,0.3);
+    color: var(--text);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .project-card.purple::before { background: var(--accent); }
+  .project-card.teal::before { background: var(--accent2); }
+  .project-card.amber::before { background: var(--accent3); }
+
+  .project-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+
+  .project-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+  }
+
+  .project-icon.purple { background: rgba(200,53,53,0.15); }
+  .project-icon.teal { background: rgba(76,201,164,0.15); }
+  .project-icon.amber { background: rgba(245,166,35,0.15); }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.65rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .stack-tag {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .stack-tag.purple { background: rgba(200,53,53,0.1); color: #a82828; }
+  .stack-tag.teal { background: rgba(15,168,124,0.1); color: #077a59; }
+  .stack-tag.amber { background: rgba(217,119,6,0.1); color: #a85c00; }
+
+  /* EXPERIENCE */
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-left: 1px solid var(--border);
+    margin-left: 1rem;
+    padding-left: 2.5rem;
+    position: relative;
+  }
+
+  .exp-item {
+    padding: 0 0 2.5rem;
+    position: relative;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent);
+    margin-left: -4px;
+  }
+
+  .exp-date {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+  }
+
+  .exp-org {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+    font-weight: 400;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 1px;
+  }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+  }
+
+  .contact-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .contact-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(200,53,53,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+    background: var(--surface2);
+  }
+
+  .contact-link:hover {
+    border-color: rgba(200,53,53,0.4);
+    color: var(--text);
+    background: rgba(200,53,53,0.08);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* LEADERSHIP */
+  .leadership-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+
+  .leadership-card:hover { border-color: var(--border-hover); }
+
+  .leadership-bar { background: var(--accent); border-radius: 4px; }
+  .leadership-bar.teal { background: var(--accent2); }
+
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #c4c0e8; border-radius: 3px; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; grid-template-columns: 1fr; }
+    .hero-photo { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .leadership-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <a href="#" class="nav-logo">Kurt<span>.</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero" role="banner" id="home">
+  <div class="hero-content">
+    <div class="hero-tag">CS Student &amp; Software Engineer</div>
+    <h1>Kurt<br><em>Lim.</em></h1>
+    <p class="hero-sub">
+      Computer Science graduate at Chapman University, passionate about full stack development,
+       data systems, and building up technology that work — from a Physics Lab Assistant Robot
+        to sports analytics platforms.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects ↓</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-stats" aria-label="Key highlights">
+      <div class="stat-item">
+        <span class="stat-num">7+</span>
+        <span class="stat-label">Languages</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Major Projects</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Graduation</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">$10K+</span>
+        <span class="stat-label">Raised for Charity</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="profile.jpg" alt="Kurt Lim" />
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" aria-labelledby="about-heading">
+  <div class="section-tag">Who I Am</div>
+  <h2 id="about-heading">About Me</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Computer Science student</strong> at Chapman University's Fowler School of Engineering,
+         minoring in Game Development, graduating May 2026. I love the intersection of systems thinking and 
+         user accessibility and practicality.
+      </p>
+      <p>
+        My background spans <strong>full stack web apps</strong>, data engineering pipelines, AI-powered systems,
+         and low level hardware projects built with Java, Python, C++, React, and more.
+      </p>
+      <p>
+        Outside of academics I served as <strong>VP of Risk Management</strong> in Beta Theta Pi, volunteer
+         teaching tech skills to senior citizens, and contribute to Chapman student research in AI robotics.
+      </p>
+    </div>
+    <div class="about-info" role="list" aria-label="Personal details">
+      <div class="info-card reveal" role="listitem">
+        <div class="info-card-label">Education</div>
+        <div class="info-card-value">Chapman University</div>
+        <div class="info-card-sub">B.S. Computer Science · Minor in Game Dev · May 2026</div>
+      </div>
+      <div class="info-card reveal" role="listitem">
+        <div class="info-card-label">Location</div>
+        <div class="info-card-value">Orange, CA</div>
+        <div class="info-card-sub">Originally Seattle, WA · Open to relocation</div>
+      </div>
+      <div class="info-card reveal" role="listitem">
+        <div class="info-card-label">Email</div>
+        <div class="info-card-value">kurtcarl@comcast.net</div>
+        <div class="info-card-sub">(206) 914-7670</div>
+      </div>
+      <div class="info-card reveal" role="listitem">
+        <div class="info-card-label">Interests</div>
+        <div class="info-card-value">Software Engineering · Data Science</div>
+        <div class="info-card-sub">Game Dev · AI Systems · Robotics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="section-tag">What I Know</div>
+  <h2 id="skills-heading">Skills &amp; Tools</h2>
+  <p class="section-intro">A toolkit built across coursework, internships, and personal projects constantly growing.</p>
+  <div class="skills-grid reveal" role="list">
+    <div class="skill-group reveal" role="listitem">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">Swift</span>
+      </div>
+    </div>
+    <div class="skill-group reveal" role="listitem">
+      <div class="skill-group-title">Frameworks</div>
+      <div class="skill-tags">
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Express</span>
+        <span class="skill-tag">LangChain</span>
+        <span class="skill-tag">OpenAI API</span>
+        <span class="skill-tag">ElevenLabs API</span>
+      </div>
+    </div>
+    <div class="skill-group reveal" role="listitem">
+      <div class="skill-group-title">Databases</div>
+      <div class="skill-tags">
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">PlanetScale</span>
+        <span class="skill-tag">RESTful APIs</span>
+      </div>
+    </div>
+    <div class="skill-group reveal" role="listitem">
+      <div class="skill-group-title">DevOps &amp; Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Unix/Linux</span>
+        <span class="skill-tag">Jira</span>
+        <span class="skill-tag">QGIS</span>
+      </div>
+    </div>
+    <div class="skill-group reveal" role="listitem">
+      <div class="skill-group-title">Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Raspberry Pi</span>
+        <span class="skill-tag">R Studio</span>
+        <span class="skill-tag">Excel</span>
+        <span class="skill-tag">JetBrains Rider</span>
+      </div>
+    </div>
+    <div class="skill-group reveal" role="listitem">
+      <div class="skill-group-title">Methodologies</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Agile / Scrum</span>
+        <span class="skill-tag">OOP</span>
+        <span class="skill-tag">Data Structures</span>
+        <span class="skill-tag">CRUD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" aria-labelledby="projects-heading">
+  <div class="section-tag">What I've Built</div>
+  <h2 id="projects-heading">Projects</h2>
+  <p class="section-intro">Real world applications built with a focus on clean architecture and thoughtful design.</p>
+  <div class="projects-grid">
+
+    <article class="project-card purple reveal" aria-labelledby="proj1-title">
+      <div class="project-icon purple" aria-hidden="true">⚾</div>
+      <h3 class="project-title" id="proj1-title">Baseball Stat Tracking Web App</h3>
+      <p class="project-desc">
+        Full stack platform for baseball teams to manage rosters, create games, and track live player stats
+         through an interactive GameCast interface. Built RESTful APIs with real-time data logging and frontend 
+         state management.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag purple">React</span>
+        <span class="stack-tag purple">Node.js</span>
+        <span class="stack-tag purple">Express</span>
+        <span class="stack-tag purple">MySQL</span>
+      </div>
+    </article>
+
+    <article class="project-card teal reveal" aria-labelledby="proj2-title">
+      <div class="project-icon teal" aria-hidden="true"><img src="ChapmanLogo.webp" alt="Chapman University"></div>
+      <h3 class="project-title" id="proj2-title">AI Class Advising Chatbot</h3>
+      <p class="project-desc">
+        AI driven chatbot designed to guide students through course requirements and 4 year planning.
+         Built with NLP capabilities and integration with academic databases. Collaborated on a team of 6.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag teal">Python</span>
+        <span class="stack-tag teal">OpenAI</span>
+        <span class="stack-tag teal">LangChain</span>
+        <span class="stack-tag teal">HTML</span>
+      </div>
+    </article>
+
+    <article class="project-card amber reveal" aria-labelledby="proj3-title">
+      <div class="project-icon amber" aria-hidden="true"><img src="IRWD.png" alt="IRWD"></div>
+      <h3 class="project-title" id="proj3-title">Irvine Ranch Water Usage Analysis</h3>
+      <p class="project-desc">
+        Geospatial analysis using QGIS to study monthly water usage by age demographic in Woodridge,
+         Irvine CA. Leveraged real data from Irvine Ranch Water District to identify usage patterns 
+         across age groups.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag amber">QGIS</span>
+        <span class="stack-tag amber">R Studio</span>
+        <span class="stack-tag amber">Excel</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" aria-labelledby="exp-heading">
+  <div class="section-tag">Where I've Worked</div>
+  <h2 id="exp-heading">Experience</h2>
+  <p class="section-intro">From robotics research labs to sports analytics startups diverse environments,
+     consistent growth.</p>
+  <div class="experience-list reveal" role="list">
+
+    <div class="exp-item" role="listitem">
+      <div class="exp-date">November 2025 – Present · Hybrid</div>
+      <div class="exp-title">Software / Systems Developer</div>
+      <div class="exp-org">Chapman University — Student Research Assistant</div>
+      <ul class="exp-bullets" aria-label="Responsibilities">
+        <li>Developed an AI-powered robotics assistant with real-time speech recognition and natural language interaction</li>
+        <li>Built concurrent, state driven Python system to run voice processing and environmental analysis in parallel</li>
+        <li>Integrated ElevenLabs API for low latency conversational responses</li>
+        <li>Collaborated on hardware-software integration using a Raspberry Pi 5based system</li>
+      </ul>
+    </div>
+
+    <div class="exp-item" role="listitem">
+      <div class="exp-date">July 2025 – August 2025 · Remote</div>
+      <div class="exp-title">Data Science Intern — Database Management</div>
+      <div class="exp-org">Project Parlay (Sports Analytics Startup)</div>
+      <ul class="exp-bullets" aria-label="Responsibilities">
+        <li>Designed and managed a PlanetScale-hosted MySQL database for real-time sports data (NBA, NFL, MLB)</li>
+        <li>Built and optimized backend data pipelines for sports betting APIs</li>
+        <li>Developed Python modules automating access to ProphetX sports betting exchanges</li>
+      </ul>
+    </div>
+
+    <div class="exp-item" role="listitem">
+      <div class="exp-date">August 2024 – Present · Orange, CA</div>
+      <div class="exp-title">Fitness Center Assistant</div>
+      <div class="exp-org">Chapman Fitness Centers</div>
+      <ul class="exp-bullets" aria-label="Responsibilities">
+        <li>Delivered front desk services — managing memberships, inquiries, and personalized member support</li>
+        <li>Conducted periodic headcounts and data collection contributing to year-end operational reports</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership" aria-labelledby="lead-heading">
+  <div class="section-tag">Beyond the Code</div>
+  <h2 id="lead-heading">Leadership &amp; Community</h2>
+  <p class="section-intro">Building community, giving back, and leading with purpose.</p>
+  <div class="leadership-grid reveal" role="list">
+
+    <div class="leadership-card" role="listitem" aria-label="Beta Theta Pi leadership role">
+      <div class="leadership-bar" aria-hidden="true"></div>
+      <div>
+        <div class="exp-date" style="margin-bottom:0.4rem">Sep 2022 – May 2026</div>
+        <div class="exp-title">VP of Risk Management</div>
+        <div class="exp-org" style="margin-bottom:0.9rem">Beta Theta Pi — Eta Theta Chapter</div>
+        <ul class="exp-bullets">
+          <li>Promoted safe, supportive chapter culture aligned with core fraternity values</li>
+          <li>Evaluated misconduct on Standards Committee and developed prevention strategies</li>
+          <li>Raised <strong style="color:var(--accent)">$10,000+</strong> for Beta Theta Paws philanthropy event benefiting a local dog shelter</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="leadership-card" role="listitem" aria-label="Tech tutoring volunteer work">
+      <div class="leadership-bar teal" aria-hidden="true"></div>
+      <div>
+        <div class="exp-date" style="margin-bottom:0.4rem">Ongoing</div>
+        <div class="exp-title">Tech Tutor Volunteer</div>
+        <div class="exp-org" style="margin-bottom:0.9rem">Local Senior Center</div>
+        <ul class="exp-bullets">
+          <li>Taught technology fundamentals and digital literacy skills to senior citizens</li>
+          <li>Developed patient, accessible instruction methods for non-technical learners</li>
+          <li>Bridged the digital divide by helping seniors navigate modern devices and software</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="contact-wrapper">
+    <div class="section-tag" style="justify-content:center">Let's Connect</div>
+    <h2 id="contact-heading" style="font-size:2rem; margin-bottom:0.75rem">Say Hello</h2>
+    <p style="color:var(--muted); font-size:1rem; font-weight:300; max-width:420px; margin:0 auto 0.5rem;">
+      I'm currently seeking software engineering internships and opportunities. Reach out — I'd love to talk.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:kurtcarl@comcast.net" class="contact-link" aria-label="Send email to Kurt Lim">
+        ✉ kurtcarl@comcast.net
+      </a>
+      <a href="https://www.linkedin.com/in/kurt-lim-428434289" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Visit Kurt Lim's LinkedIn profile">
+        in LinkedIn
+      </a>
+      <a href="tel:2069147670" class="contact-link" aria-label="Call Kurt Lim">
+        📞 (206) 914-7670
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <p>Designed &amp; built by Kurt Lim · Chapman University, Class of 2026</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
